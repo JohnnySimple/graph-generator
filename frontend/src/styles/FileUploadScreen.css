@@ -1,0 +1,29 @@
+.FileUploadSection {
+    display: flex;
+    justify-content: center;
+    padding: 100px 0px 100px 0px;
+  }
+  
+  .FileUploadInner {
+    width: 60%;
+    text-align: center;
+    padding: 4em;
+    border: 1.5px dashed #000;
+    background-color: rgb(104, 181, 249);
+  }
+
+  .FileUploadScreen__error p {
+    color: red;
+  }
+
+  .FileUploadSection__buttonSection {
+    padding-top: 2em;
+  }
+
+  .FileUploadSection__buttonSection button {
+    width: 150px;
+    height: 45px;
+    border-radius: 5px;
+    border-color: transparent;
+    /* padding: 20px; */
+  }
