@@ -1,0 +1,33 @@
+:root {
+    --header-height: 3rem;
+}
+
+.ProcessingScreen {
+    height: calc(100vh - var(--header-height));
+    padding: 10px;
+    /* box-shadow: 0 0 2px #ccc; */
+}
+
+.ProcessingScreen__graph-area {
+    /* border: 1px solid #ccc; */
+    height: 100%;
+}
+
+.ProcessingScreen__properties-area {
+    /* border: 1px solid #ccc; */
+    height: 100%;
+}
+
+.properties-area-top .form-group {
+    padding-bottom: 10px;
+}
+.properties-area-bottom {
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.properties-area-bottom button {
+    width: 200px;
+    
+}

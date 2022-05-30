@@ -2,8 +2,13 @@ from flask import (request, jsonify)
 from project import app
 from werkzeug.exceptions import NotAcceptable
 import pandas as pd
+import matplotlib.pyplot as plt
+import glob
 
 from starlette import status
+
+from project.utils import helper_functions
+from project.utils import constants
 
 @app.route("/", methods=["GET"])
 def index():
@@ -18,12 +23,12 @@ def upload_file():
     """
     upload file route
     """
-    UPLOAD_FOLDER = "uploads/"
+    UPLOAD_FOLDER = constants.UPLOAD_FOLDER
 
     if "file" in request.files:
         uploaded_file = request.files["file"]
 
-        if allowed_file(uploaded_file):
+        if helper_functions.allowed_file(uploaded_file):
             # save file and return success response
             uploaded_file.save(UPLOAD_FOLDER + uploaded_file.filename)
             return {
@@ -50,9 +55,15 @@ def get_file_headers():
     """
     get all headers
     """
-    UPLOAD_FOLDER = "uploads/"
+    filename = request.args.get("filename", default = "", type = str)
 
-    data = read_excel_file(UPLOAD_FOLDER + 'toJon.csv');
+    if not filename:
+        return {
+            "status": status.HTTP_400_BAD_REQUEST,
+            "message": "filename is required"
+        }
+
+    data = helper_functions.read_excel_file(constants.UPLOAD_FOLDER + filename);
     
     return {
         "status": status.HTTP_200_OK,
@@ -60,22 +71,53 @@ def get_file_headers():
     }
 
 
+@app.route("/get_all_uploaded_files", methods=["GET", "POST"])
+def get_all_uploaded_files():
+    """
+    get all uploaded excel files
+    """
+    UPLOAD_FOLDER = constants.UPLOAD_FOLDER_STAR
+    all_files = [f.split("\\")[1] for f in glob.glob(UPLOAD_FOLDER)]
 
-# helper functions
-def allowed_file(uploaded_file):
-    """
-    check if uploaded file is allowed
-    """
-    ALLOWED_EXTENSIONS = ["csv", "xlsx"]
+    all_files = [f for f in all_files if f.endswith(".csv") or f.endswith(".xlsx")] # return excel only files
+    return {
+        "status": status.HTTP_200_OK,
+        "uploaded_files": all_files
+    }
 
-    file_extension = uploaded_file.filename.split('.')[1]
-    if file_extension in ALLOWED_EXTENSIONS:
-        return True
 
-def read_excel_file(file_name):
+@app.route("/get_column_content", methods=["GET", "POST"])
+def get_column_content():
     """
-    read excel file
+    get content of given column of a file
     """
-    file_data = pd.read_csv(file_name);
-    # print(file)
-    return file_data
+    params = ["file_name", "column_name"]
+    file_name = request.args.get("file_name", default = "", type = str)
+    column_name = request.args.get("column_name", default = "", type = str)
+
+    # for param in params:
+    #     if param == "":
+    #         return {
+    #             "status": status.HTTP_400_BAD_REQUEST,
+    #             "message": '{} is required'.format(param)
+    #         }
+
+    df = helper_functions.read_excel_file(constants.UPLOAD_FOLDER + file_name)
+    
+    return {
+        "status": status.HTTP_200_OK,
+        "content": df[column_name].tolist()
+    }
+
+@app.route("/get_bar_graph", methods=["GET", "POST"])
+def get_bar_graph():
+    """
+    get bar graph
+    """
+
+    params = ["file_name", "column_one_name", "column_two_name"]
+    file_name = request.args.get("file_name", default = "", type = str)
+    x_values = request.args.get("x_values", default = "", type = str)
+    y_values = request.args.get("y_values", default = "", type = str)
+
+    plt.bar(x_values, y_values)

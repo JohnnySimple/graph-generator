@@ -6,7 +6,8 @@ import "./App.css";
 
 // import components
 import Layout from "./components/Layout";
-import Sidebar from "./components/Sidebar";
+import HomeLayout from "./components/HomeLayout";
+// import Sidebar from "./components/Sidebar";
 
 // import screens
 import FileUploadScreen from "./screens/FileUploadScreen";
@@ -31,10 +32,12 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route path="file-upload" element={<FileUploadScreen />} />
             <Route path="process" element={<ProcessingScreen />} />
           </Route>
-          <Route path="sidebar" element={<Sidebar />} />
+          <Route path="/home" element={<HomeLayout />}>
+            <Route path="file-upload" element={<FileUploadScreen />} />
+          </Route>
+          <Route path="homelayout" element={<HomeLayout />} />
         </Routes>
       </Router>
     </div>

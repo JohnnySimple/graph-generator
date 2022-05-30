@@ -1,0 +1,4 @@
+# CONSTANTS
+
+UPLOAD_FOLDER = "uploads/"
+UPLOAD_FOLDER_STAR = "uploads/*"

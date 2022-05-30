@@ -17,7 +17,7 @@
     box-sizing: border-box
 }
 
-body {
+.Sidebar_body {
     position: relative;
     margin: var(--header-height) 0 0 0;
     padding: 0 1rem;
@@ -46,7 +46,7 @@ a {
 }
 
 .main_content {
-    transition: .5s
+    transition: .5s;
 }
 
 .header_toggle {
@@ -126,11 +126,11 @@ a {
     font-size: 1.25rem
 }
 
-.show {
+.sidebar-show {
     left: 0
 }
 
-.body-pd {
+.Sidebar_body-pd {
     padding-left: calc(var(--nav-width) + 1rem)
 }
 
@@ -155,8 +155,12 @@ a {
     height: 100vh
 }
 
+.dropdown-icon {
+    margin-left: 5rem;
+}
+
 @media screen and (min-width: 768px) {
-    body {
+    .Sidebar_body {
         margin: calc(var(--header-height) + 1rem) 0 0 0;
         padding-left: calc(var(--nav-width) + 2rem)
     }
@@ -180,11 +184,11 @@ a {
         padding: 1rem 1rem 0 0
     }
 
-    .show {
+    .sidebar-show {
         width: calc(var(--nav-width) + 156px)
     }
 
-    .body-pd {
+    .Sidebar_body-pd {
         padding-left: calc(var(--nav-width) + 188px)
     }
 
