@@ -22,7 +22,7 @@ def read_excel_file(file_name):
     if file_extension == "csv":
         file_data = pd.read_csv(file_name)
     else:
-        file_data = pd.read_excel(file_name);
+        file_data = pd.read_excel(file_name, keep_default_na=False);
         
     # print(file)
     return file_data
