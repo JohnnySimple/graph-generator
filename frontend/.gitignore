@@ -8,6 +8,10 @@
 # testing
 /coverage
 
+# files
+*.csv
+*.xlsx
+
 # production
 /build
 
