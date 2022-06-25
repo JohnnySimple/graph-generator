@@ -58,10 +58,11 @@ def get_file_headers():
     filename = request.args.get("filename", default = "", type = str)
 
     if not filename:
-        return {
-            "status": status.HTTP_400_BAD_REQUEST,
-            "message": "filename is required"
-        }
+        # return {
+        #     "status": status.HTTP_400_BAD_REQUEST,
+        #     "message": "filename is required"
+        # }
+        raise NotAcceptable("filename is required")
 
     data = helper_functions.read_excel_file(constants.UPLOAD_FOLDER + filename);
     
